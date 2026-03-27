@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --color-icarus-1: oklch(0.2041 0.0371 239.51); /*"#051926";*/
+  --color-icarus-2: oklch(0.4836 0.0721 206.64); /*"#1F6A73";*/
+  --color-icarus-3: oklch(0.7346 0.113 194.98); /*"#36BFBF";*/
+  --color-icarus-4: oklch(0.8081 0.145 79.06); /*"#F2B441";*/
+  --color-icarus-5: oklch(0.6966 0.1692 39.72); /*"#F27244";*/
+}
