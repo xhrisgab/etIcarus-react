@@ -54,7 +54,15 @@ const Layout = () => {
           <Bateria />
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-4"></div>
+
+      <div className="grid grid-cols-4 gap-4 m-10">
+        <div>
+          <Altura />
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </>
   );
 };
