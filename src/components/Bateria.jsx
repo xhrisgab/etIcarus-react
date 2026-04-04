@@ -6,6 +6,8 @@ import "react-circular-progressbar/dist/styles.css";
 
 const Bateria = () => {
   const [date, setDate] = useState(new Date());
+  const showTime =
+    date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
   const percentage = 73;
   return (
@@ -13,7 +15,7 @@ const Bateria = () => {
       <div>
         <div className="flex justify-between">
           <div>Hora Sistema:</div>
-          <div>{date.toDateString()}</div>
+          <div>{showTime}</div>
         </div>
         <div className="flex justify-between">
           <div>Fecha Sistema:</div>

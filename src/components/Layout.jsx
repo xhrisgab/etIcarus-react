@@ -1,5 +1,6 @@
 import Bateria from "./Bateria";
 import Altura from "./Altura";
+import Card from "./Card";
 
 const Layout = () => {
   return (
@@ -55,13 +56,21 @@ const Layout = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 m-10">
+      {/* Segunda Seccion Telemetria */}
+
+      <div className="grid grid-cols-4">
         <div>
-          <Altura />
+          <Card title="Velocidad -" unit="[m/s]" value="18"></Card>
         </div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div>
+          <Card />
+        </div>
+        <div>
+          <Card />
+        </div>
+        <div>
+          <Card />
+        </div>
       </div>
     </>
   );
