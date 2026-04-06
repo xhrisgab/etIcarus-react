@@ -12,7 +12,7 @@ const Bateria = () => {
   const percentage = 73;
   return (
     <>
-      <div>
+      <div className="text-icarus-3 mx-4">
         <div className="flex justify-between">
           <div>Hora Sistema:</div>
           <div>{showTime}</div>
@@ -22,11 +22,11 @@ const Bateria = () => {
           <div>{date.toDateString()}</div>
         </div>
       </div>
-      <h1 className="card-title justify-center">
+      <h1 className="card-title justify-center mt-4">
         <div className="text-icarus-5 text-lg">Bateria</div>
       </h1>
       <CircularProgressbar
-        className="h-40"
+        className="h-40 mt-2"
         value={percentage}
         text={`${percentage}%`}
         styles={buildStyles({

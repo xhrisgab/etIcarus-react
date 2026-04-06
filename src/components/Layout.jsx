@@ -5,7 +5,7 @@ import Card from "./Card";
 const Layout = () => {
   return (
     <>
-      <div className="grid grid-cols-4 gap-4 m-10">
+      <div className="grid grid-cols-4 gap-4 m-10 font-poppins">
         {/* Primer cuadro de la interfaz */}
         <div>
           <h1 className="text-icarus-4 text-center text-xl">Puerto Serial</h1>
@@ -58,18 +58,18 @@ const Layout = () => {
 
       {/* Segunda Seccion Telemetria */}
 
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-4 font-poppins">
         <div>
-          <Card title="Velocidad -" unit="[m/s]" value="18"></Card>
+          <Card title="Velocidad -" unit="[m/s]" value="18" />
         </div>
         <div>
-          <Card />
+          <Card title="Presion -" unit="[kPa]" value="18" />
         </div>
         <div>
-          <Card />
+          <Card title="Temperatura -" unit="ºC" value="18" />
         </div>
         <div>
-          <Card />
+          <Card title="Acelercion -" unit="[m/s^2]" value="18" />
         </div>
       </div>
     </>

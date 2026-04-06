@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 @import "tailwindcss";
 @plugin "daisyui";
 
@@ -7,4 +8,6 @@
   --color-icarus-3: oklch(0.7346 0.113 194.98); /*"#36BFBF";*/
   --color-icarus-4: oklch(0.8081 0.145 79.06); /*"#F2B441";*/
   --color-icarus-5: oklch(0.6966 0.1692 39.72); /*"#F27244";*/
+
+  --font-poppins: "Poppins", "sans-serif";
 }
