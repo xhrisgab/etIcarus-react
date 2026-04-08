@@ -2,7 +2,38 @@ import Bateria from "./Bateria";
 import Altura from "./Altura";
 import Card from "./Card";
 
+import serialService from "../assets/SerialService";
+import { useState } from "react";
+
+//=======Conexion de Puerto===========
+async function ConnectPort() {
+  const port = await serialService.reqPort();
+  console.log(port);
+  await serialService
+    .connect(115200)
+    .then((resp) => {
+      console.log(resp);
+      return port;
+    })
+    .catch((err) => console.log(err));
+}
+
+//========Funcion Principal de LayOut==============
 const Layout = () => {
+  const [LabelPort, setLabelPort] = useState("");
+
+  const LeerPuerto = () => {
+    // serialService
+    //   .reqPrueba()
+    //   .then((x) => console.log(x))
+    //   .catch((e) => console.log(e));
+    setLabelPort(
+      ConnectPort()
+        .then((x) => console.log("Puerto escogido", x))
+        .catch((e) => console.log("Error:", e)),
+    );
+  };
+
   return (
     <>
       <div className="grid grid-cols-4 gap-4 m-10 font-poppins">
@@ -14,10 +45,13 @@ const Layout = () => {
               type="text"
               className="w-full bg-icarus-4 border-3 border-icarus-2 text-black text-center font-bold rounded-xl"
               placeholder="Puerto seleccionado..."
-              value={""}
+              value={{ LabelPort }}
               disabled
             />
-            <button className="btn border-icarus-2 border-3 ml-2 text-icarus-2 bg-icarus-4 hover:bg-icarus-5">
+            <button
+              className="btn border-icarus-2 border-3 ml-2 text-icarus-2 bg-icarus-4 hover:bg-icarus-5"
+              onClick={LeerPuerto}
+            >
               Conectar
             </button>
           </div>
@@ -27,7 +61,7 @@ const Layout = () => {
               className="mb-2 w-full h-20 resize-none bg-icarus-1 border-icarus-5 text-icarus-3 border-2 rounded-lg"
               name="Logs"
               id="logs"
-              value={`* ${"Hola1"}
+              defaultValue={`* ${"Hola1"}
 * ${"Hola2"}
 * ${"Hola1"}`}
             ></textarea>

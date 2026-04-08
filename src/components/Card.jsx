@@ -35,7 +35,7 @@ const Card = (props) => {
   return (
     <div className="card bg-icarus-2 w-auto shadow-sm m-2">
       <div className="card-body">
-        <h2 className="card-title justify-center text-icarus-5">
+        <h2 className="card-title justify-center text-icarus-5 font-medium">
           {props.title} <span className="text-icarus-4">{props.value}</span>
           {props.unit}
         </h2>
