@@ -14,6 +14,14 @@ const Home = () => {
         <button className="btn justify-around bg-icarus-1 border-icarus-4 border-2 text-icarus-4 rounded-2xl hover:bg-icarus-5">
           Empezar mision!
         </button>
+        <a
+          href="#/imagen"
+          target="_blank"
+          rel="noonpener noreferrer"
+          className="btn ms-4 justify-around bg-icarus-1 border-icarus-4 border-2 text-icarus-4 rounded-2xl hover:bg-icarus-5"
+        >
+          Ver Imagen Estereoscopica
+        </a>
       </div>
       <section className="flex flex-row justify-around">
         <div className="w-1/3">
