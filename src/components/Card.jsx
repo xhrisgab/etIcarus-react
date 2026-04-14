@@ -7,15 +7,38 @@ import {
   Tooltip,
 } from "recharts";
 import { RechartsDevtools } from "@recharts/devtools";
+import { useEffect, useState } from "react";
 
 const data = [
-  { name: "2026/04/06 10:43", valor: 18.94, hora: "10:43" },
-  { name: "2026/04/06 10:45", valor: 19.01, hora: "10:45" },
-  { name: "2026/04/06 10:46", valor: 19.01, hora: "10:46" },
-  { name: "2026/04/06 10:47", valor: 19.2, hora: "10:47" },
-  { name: "2026/04/06 10:49", valor: 19.5, hora: "10:49" },
-  { name: "2026/04/06 10:50", valor: 19.51, hora: "10:50" },
+  { name: "2026/04/06 10:43", valor: 18.94, pkg: "0" },
+  { name: "2026/04/06 10:45", valor: 19.01, pkg: "1" },
+  { name: "2026/04/06 10:46", valor: 19.01, pkg: "2" },
+  { name: "2026/04/06 10:47", valor: 19.2, pkg: "3" },
+  { name: "2026/04/06 10:49", valor: 19.5, pkg: "4" },
+  { name: "2026/04/06 10:50", valor: 19.51, pkg: "5" },
 ];
+function generateNextData(currentData) {
+  const lastEntry = currentData[currentData.length - 1];
+  //time
+  const lastDate = new Date(lastEntry.name);
+  const nextDate = new Date(lastDate.getTime() + 10000); // +10000ms = 1 seg
+  // Formateo de strings (YYYY/MM/DD HH:mm)
+  const pad = (n) => n.toString().padStart(2, '0');
+  const dateStr = `${nextDate.getFullYear()}/${pad(nextDate.getMonth() + 1)}/${pad(nextDate.getDate())} ${pad(nextDate.getHours())}:${pad(nextDate.getMinutes())}`;
+  const hourStr = `${pad(nextDate.getHours())}:${pad(nextDate.getMinutes())}`;
+  const nroPkg = Number(lastEntry.pkg) + 1;
+  const variation = 2;
+  const change = (Math.random() * 2 - 1) * variation;
+  const nextValue = parseFloat((lastEntry.valor + change).toFixed(2));
+
+  return {
+    name: dateStr,
+    valor: nextValue,
+    pkg: nroPkg+'',
+  };
+}
+
+
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
@@ -32,8 +55,21 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const Card = (props) => {
+  const [chartData, setChartData] = useState(data);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setChartData(current => {
+        const next = generateNextData(current);
+        return [...current, next].slice(-6);
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+  
   return (
-    <div className="card bg-icarus-2 w-auto shadow-sm m-2">
+    <div className="card bg-icarus-1 w-auto shadow-sm m-2">
       <div className="card-body">
         <h2 className="card-title justify-center text-icarus-5 font-medium">
           {props.title} <span className="text-icarus-4">{props.value}</span>
@@ -43,7 +79,7 @@ const Card = (props) => {
         <LineChart
           style={{ width: "100%", height: "70%" }}
           responsive
-          data={data}
+          data={chartData}
           margin={{
             top: 5,
             right: 1,
@@ -58,7 +94,7 @@ const Card = (props) => {
             stroke="#36BFBF"
             strokeWidth={1.5}
           />
-          <XAxis dataKey="hora" stroke="#FFF" textLength={30} />
+          <XAxis dataKey="pkg" stroke="#FFF" textLength={20} />
           <YAxis stroke="#FFF" />
           <Tooltip cursor={false} content={<CustomTooltip />} />
           <Line type="monotone" dataKey="valor" stroke="#F27244" />

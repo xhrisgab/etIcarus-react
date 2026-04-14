@@ -23,7 +23,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const Altura = () => {
   return (
-    <div className="card card-border bg-icarus-2 h-80">
+    <div className="card card-border bg-icarus-1 h-80">
       <div className="card-body">
         <h1 className="card-title justify-center">
           <div className="text-icarus-5 text-lg">
@@ -51,7 +51,7 @@ const Altura = () => {
           <YAxis
             domain={[0, 600]}
             // tickFormatter={(tick) => `${tick} m`}
-            tick={{ fontSize: 14, fill: "#051926" }}
+            tick={{ fontSize: 14, fill: "#fff" }}
           />
           <Tooltip cursor={false} content={<CustomTooltip />} />
           <Bar
