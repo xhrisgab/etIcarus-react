@@ -9,6 +9,7 @@ const Imagen = () => {
   };
 
   const [zoom, setZoom] = useState(1);
+  const [rotation, setRotation] = useState(0);
 
   return (
     <div className="font-poppins">
@@ -20,17 +21,19 @@ const Imagen = () => {
       <div className="flex flex-row m-10">
         <div className="basis-1/4 text-center content-center mx-8">
           <div className="my-8">
-            <div className="text-icarus-5">Girar</div>
+            <div className="text-icarus-5">Girar: {rotation}</div>
             <input
               type="range"
-              min={0}
-              max="100"
-              //   value={"40"}
+              min={-180}
+              max={180}
+              step={5}
+              value={rotation}
               className="my-2 range range-lg text-icarus-3 [--range-bg:#1F6A73] [--range-thumb:#051926] [--range-fill:0]"
+              onChange={(e) => setRotation(parseFloat(e.target.value))}
             />
           </div>
           <div className="my-8">
-            <div className="text-icarus-5">Zoom</div>
+            <div className="text-icarus-5">Zoom: x{zoom}</div>
             <input
               type="range"
               min={1}
@@ -47,6 +50,7 @@ const Imagen = () => {
               type="range"
               min="0"
               max="200"
+              step={5}
               value={contraste}
               className="my-2 range range-lg text-icarus-3 [--range-bg:#1F6A73] [--range-thumb:#051926] [--range-fill:0]"
               onChange={handleContraste}
@@ -58,7 +62,10 @@ const Imagen = () => {
         <div className="basis-2/4 relative w-80 h-100% overflow-hidden rounded-xl border border-gray-300">
           <img
             className="w-full h-full object-cover transition-transform duration-20"
-            style={{ filter: `contrast(${contraste}%)` }}
+            style={{
+              filter: `contrast(${contraste}%)`,
+              transform: `scale(${zoom}) rotate(${rotation}deg)`,
+            }}
             src="/imagen.png"
             alt="Imagen Estereoscopica"
           />
