@@ -9,7 +9,7 @@ const Home = () => {
   const serialData = useSerialStore((state) => state.serialData);
 
   return (
-    <div className="flex-col justify-center align-middle w-screen">
+    <div className="flex-col justify-center align-middle w-full">
       <div>
         <button className="btn justify-around bg-icarus-1 border-icarus-4 border-2 text-icarus-4 rounded-2xl hover:bg-icarus-5">
           Empezar mision!

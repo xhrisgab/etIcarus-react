@@ -23,7 +23,7 @@ function generateNextData(currentData) {
   const lastDate = new Date(lastEntry.name);
   const nextDate = new Date(lastDate.getTime() + 10000); // +10000ms = 1 seg
   // Formateo de strings (YYYY/MM/DD HH:mm)
-  const pad = (n) => n.toString().padStart(2, '0');
+  const pad = (n) => n.toString().padStart(2, "0");
   const dateStr = `${nextDate.getFullYear()}/${pad(nextDate.getMonth() + 1)}/${pad(nextDate.getDate())} ${pad(nextDate.getHours())}:${pad(nextDate.getMinutes())}`;
   const hourStr = `${pad(nextDate.getHours())}:${pad(nextDate.getMinutes())}`;
   const nroPkg = Number(lastEntry.pkg) + 1;
@@ -34,10 +34,9 @@ function generateNextData(currentData) {
   return {
     name: dateStr,
     valor: nextValue,
-    pkg: nroPkg+'',
+    pkg: nroPkg + "",
   };
 }
-
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -56,10 +55,10 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const Card = (props) => {
   const [chartData, setChartData] = useState(data);
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setChartData(current => {
+      setChartData((current) => {
         const next = generateNextData(current);
         return [...current, next].slice(-6);
       });
@@ -67,9 +66,9 @@ const Card = (props) => {
 
     return () => clearInterval(interval);
   }, []);
-  
+
   return (
-    <div className="card bg-icarus-1 w-auto shadow-sm m-2">
+    <div className="card bg-icarus-1 w-auto shadow-lg m-2">
       <div className="card-body">
         <h2 className="card-title justify-center text-icarus-5 font-medium">
           {props.title} <span className="text-icarus-4">{props.value}</span>
