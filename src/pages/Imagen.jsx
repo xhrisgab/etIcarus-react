@@ -16,7 +16,6 @@ const Imagen = () => {
   const [imagenCargada, setImagenCargada] = useState(false);
   const [error, setError] = useState(false);
   // Ruta donde se subirá la imagen (carpeta public de React)
-  //const rutaImagen = "/icarus/icarus/imagen.png"; // Ajusta según tu estructura
   const urlCompleta = "/icarus/icarus/imagen.png";
 
   useEffect(() => {
