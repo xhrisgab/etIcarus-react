@@ -14,58 +14,33 @@ const Imagen = () => {
 
   //=====Control Imagen Cargada=========
   const [imagenCargada, setImagenCargada] = useState(false);
-  const [error, setError] = useState(false);
   // Ruta donde se subirá la imagen (carpeta public de React)
   const urlCompleta = "/icarus/icarus/imagen.png";
 
   useEffect(() => {
-    let intervalId;
-    let timeoutId;
-
-    const verificarImagen = () => {
+    const interval = setInterval(() => {
       fetch(urlCompleta, { method: "HEAD" })
-        .then((response) => {
-          if (response.ok) {
-            // ¡La imagen existe!
+        .then((res) => {
+          if (res.ok) {
             setImagenCargada(true);
-            clearInterval(intervalId);
-            clearTimeout(timeoutId);
+            clearInterval(interval);
           }
         })
-        .catch(() => {
-          // La imagen aún no existe, seguimos esperando
-          console.log("Esperando imagen...");
-        });
-    };
-
-    // Verificar cada 2 segundos
-    intervalId = setInterval(verificarImagen, 2000);
-
-    // Timeout de seguridad: dejar de intentar después de 60 segundos
-    timeoutId = setTimeout(() => {
-      clearInterval(intervalId);
-      setError(true);
-    }, 60000);
+        .catch(() => {});
+    }, 2000);
 
     // Limpiar al desmontar
-    return () => {
-      clearInterval(intervalId);
-      clearTimeout(timeoutId);
-    };
-  }, [urlCompleta]);
-
-  if (error) {
-    return <div>⚠️ Tiempo de espera agotado. La imagen no llegó.</div>;
-  }
+    return () => clearInterval(interval);
+  }, []);
 
   if (!imagenCargada) {
     return (
-      <div className="flex flex-full">
-        <div className="content-center">
+      <div className="text-icarus-4">
+        <div className="flex flex-col items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
+            width="80"
+            height="80"
             viewBox="0 0 24 24"
           >
             <rect width="7.33" height="7.33" x="1" y="1" fill="currentColor">
@@ -341,6 +316,8 @@ const Imagen = () => {
               />
             </rect>
           </svg>
+          <br />
+          <h1 className="text-2xl underline">Cargando...</h1>
         </div>
       </div>
     );
@@ -401,10 +378,8 @@ const Imagen = () => {
               filter: `contrast(${contraste}%)`,
               transform: `scale(${zoom}) rotate(${rotation}deg)`,
             }}
-            // src="/icarus/icarus/imagen.png"
             src={urlCompleta}
             alt="Imagen Estereoscopica"
-            onError={() => setError(true)}
           />
         </div>
       </div>
