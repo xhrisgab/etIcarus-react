@@ -1,4 +1,5 @@
 {
+  "homepage": "http://xhrisgab.github.io/etIcarus-react", 
   "name": "eticarus-react",
   "private": true,
   "version": "0.0.0",
@@ -7,13 +8,16 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@recharts/devtools": "^0.0.11",
     "@tailwindcss/vite": "^4.2.2",
+    "gh-pages": "^6.3.0",
     "react": "^19.2.4",
     "react-circular-progressbar": "^2.2.0",
     "react-dom": "^19.2.4",

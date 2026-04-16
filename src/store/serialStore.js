@@ -12,7 +12,7 @@ const useSerialStore = create((set, get) => ({
     try {
       // 1. Solicitar puerto
       const port0 = await navigator.serial.requestPort();
-      await port0.open({ baudRate: 9600 });
+      await port0.open({ baudRate: 115200 });
 
       // 2. Configurar estado inicial
       const info = port0.getInfo();
@@ -58,6 +58,7 @@ const useSerialStore = create((set, get) => ({
     
     //delimitador 'UMSA'
     if (currentBuffer.endsWith('UMSA')) {
+      console.log(currentBuffer);
       set((state) => ({
         serialData: [...state.serialData, currentBuffer].slice(-100),
         buffer: "" // Limpiar buffer
