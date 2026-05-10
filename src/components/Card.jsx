@@ -8,6 +8,7 @@ import {
 } from "recharts";
 import { RechartsDevtools } from "@recharts/devtools";
 import { useEffect, useState } from "react";
+import useSerialStore from "../store/serialStore";
 
 const data = [
   { name: "2026/04/06 10:43", valor: 18.94, pkg: "0" },
@@ -53,26 +54,49 @@ const CustomTooltip = ({ active, payload, label }) => {
   }
 };
 
-const Card = (props) => {
+const Card = ({ title, dataKey, unit }) => {
+  const serialData = useSerialStore((state) => state.serialData);
   const [chartData, setChartData] = useState(data);
-
+  const latestValue =
+    serialData.length > 0
+      ? serialData[serialData.length - 1][dataKey]
+      : 0;
+  /*
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setChartData((current) => {
+          const next = generateNextData(current);
+          const next = serialData.
+          return [...current, next].slice(-6);
+        });
+      }, 1000);
+  
+      return () => clearInterval(interval);
+    }, []);
+  */
   useEffect(() => {
-    const interval = setInterval(() => {
-      setChartData((current) => {
-        const next = generateNextData(current);
-        return [...current, next].slice(-6);
-      });
-    }, 1000);
+    if (serialData.length === 0) return;
 
-    return () => clearInterval(interval);
-  }, []);
+    const last = serialData[serialData.length - 1];
+    console.log(last["ACELERACION"]);
+    if (last[dataKey] !== undefined) {
+      setChartData((prev) => [
+        ...prev,
+        {
+          pkg: prev.length,
+          valor: last[dataKey],
+        },
+      ].slice(-6)); // últimos 20 puntos
+    }
+
+  }, [serialData, dataKey]);
 
   return (
     <div className="card bg-icarus-1 w-auto shadow-lg m-2">
       <div className="card-body">
         <h2 className="card-title justify-center text-icarus-5 font-medium">
-          {props.title} <span className="text-icarus-4">{props.value}</span>
-          {props.unit}
+          {title} <span className="text-icarus-4">{latestValue}</span>
+          {unit}
         </h2>
 
         <LineChart

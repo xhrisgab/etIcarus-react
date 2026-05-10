@@ -1,6 +1,7 @@
 import { BarChart, Bar, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { RechartsDevtools } from "@recharts/devtools";
-
+import { useEffect, useState } from "react";
+import useSerialStore from "../store/serialStore";
 const data = [
   {
     name: "Altura",
@@ -22,6 +23,13 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const AlturaH = () => {
+  const [altitude, setAltitude] = useState([]);
+  const serialData = useSerialStore((state) => state.serialData);
+  useEffect(() => {
+    if (serialData.length === 0) return;
+    const last = serialData[serialData.length - 1];
+    setAltitude([{name:"Altura",Altura:last.ALTURA},]);
+  }, [serialData]);
   return (
     <div className=" bg-icarus-1 h-80">
       <h1 className="text-icarus-4 text-center text-xl font-bold py-4">
@@ -33,7 +41,7 @@ const AlturaH = () => {
           width={250}
           height={190}
           responsive
-          data={data}
+          data={altitude}
           margin={{
             top: 5,
             right: 50,
@@ -60,12 +68,6 @@ const AlturaH = () => {
           />
           <RechartsDevtools />
         </BarChart>
-
-        <div className="card-actions justify-center">
-          <button className=" btn bg-icarus-1 border-icarus-4 border-2 text-icarus-4 rounded-2xl hover:bg-icarus-5">
-            Ver detalles
-          </button>
-        </div>
       </div>
     </div>
   );

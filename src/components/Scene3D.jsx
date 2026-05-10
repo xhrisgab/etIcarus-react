@@ -2,13 +2,16 @@ import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Stage} from '@react-three/drei';
 import { useRef } from 'react';
-
+import useSerialStore from "../store/serialStore";
 
 function CanSat({ speed = 2, ...props }) {
     const ref = useRef()
+    const serialData = useSerialStore((state) => state.serialData);
     useFrame((state) => {
         const t = state.clock.getElapsedTime() * speed
-        ref.current.rotation.set(0 , Math.sin(t), 0)
+        if (serialData.length === 0) return;
+        const last = serialData[serialData.length - 1];
+        ref.current.rotation.set( last.Gx, last.Gy, last.Gz)
         //ref.current.position.set();
     })
     return (
@@ -16,22 +19,22 @@ function CanSat({ speed = 2, ...props }) {
 
             <mesh ref={ref}>
                 <boxGeometry args={[1, 2, 1]} />
-                <meshBasicMaterial color={[10, 1, 10]} toneMapped={false} />
+                <meshBasicMaterial color={[1, 1, 1]} toneMapped={false} />
                 <mesh position={[1, 1, 0]} >
                     <boxGeometry args={[2, 0.05, 0.4]} />
-                    <meshBasicMaterial color={[10, 1, 10]} toneMapped={false} />
+                    <meshBasicMaterial color={[0.1, 0.1, 0.1]} toneMapped={true} />
                 </mesh>
                 <mesh position={[0, 1, 1]} rotation={[0,Math.PI/2,0]}>
                     <boxGeometry args={[2, 0.05, 0.4]} />
-                    <meshBasicMaterial color={[10, 1, 10]} toneMapped={false} />
+                    <meshBasicMaterial color={[0.1, 0.1, 0.1]} toneMapped={false} />
                 </mesh>
                 <mesh position={[0, 1, -1]} rotation={[0,Math.PI/2,0]}>
                     <boxGeometry args={[2, 0.05, 0.4]} />
-                    <meshBasicMaterial color={[10, 1, 10]} toneMapped={true} />
+                    <meshBasicMaterial color={[0.1, 0.1, 0.1]} toneMapped={true} />
                 </mesh>
                 <mesh position={[-1, 1, 0]} >
                     <boxGeometry args={[2, 0.05, 0.4]} />
-                    <meshBasicMaterial color={[10, 1, 10]} toneMapped={false} />
+                    <meshBasicMaterial color={[0.1, 0.1, 0.1]} toneMapped={false} />
                 </mesh>
             </mesh>
 
